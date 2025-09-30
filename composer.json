@@ -1,5 +1,5 @@
 {
-  "name": "bottledcode/php-rql",
+  "name": "shaunagordon/php-rql",
   "type": "library",
   "description": "A PHP client driver for the RethinkDB query language (ReQL)",
   "keywords": [
@@ -28,7 +28,12 @@
       "email": "landers.robert@gmail.com",
       "homepage": "https://withinboredom.info",
       "role": "Maintainer"
-    }
+    },
+    {
+      "name": "Shauna Gordon",
+      "email": "shauna@shaunagordon.com",
+      "homepage": "https://shaunagordon.com",
+      "role": "Maintainer"
   ],
   "require": {
     "php": ">=8.2",
