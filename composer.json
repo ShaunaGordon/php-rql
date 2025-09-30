@@ -34,6 +34,7 @@
       "email": "shauna@shaunagordon.com",
       "homepage": "https://shaunagordon.com",
       "role": "Maintainer"
+    }
   ],
   "require": {
     "php": ">=8.2",
