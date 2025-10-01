@@ -1,5 +1,6 @@
 {
   "name": "shaunagordon/php-rql",
+  "version": "4.0.0",
   "type": "library",
   "description": "A PHP client driver for the RethinkDB query language (ReQL)",
   "keywords": [
@@ -42,6 +43,7 @@
     "ext-openssl": "*"
   },
   "require-dev": {
+    "amphp/socket": "^2.3",
     "phpunit/phpunit": "~9.5",
     "squizlabs/php_codesniffer": "~3.7"
   },
