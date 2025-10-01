@@ -1,6 +1,5 @@
 {
   "name": "shaunagordon/php-rql",
-  "version": "4.0.0",
   "type": "library",
   "description": "A PHP client driver for the RethinkDB query language (ReQL)",
   "keywords": [
