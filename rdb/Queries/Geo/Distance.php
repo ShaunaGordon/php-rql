@@ -9,7 +9,7 @@ use r\ValuedQuery\ValuedQuery;
 
 class Distance extends ValuedQuery
 {
-    public function __construct(Query $g1, Query $g2, DistanceOptions $opts = null)
+    public function __construct(Query $g1, Query $g2, ?DistanceOptions $opts = null)
     {
         $this->setPositionalArg(0, $this->nativeToDatum($g1));
         $this->setPositionalArg(1, $this->nativeToDatum($g2));

@@ -10,10 +10,8 @@ use r\Datum\NumberDatum;
 use r\Datum\ObjectDatum;
 use r\Datum\StringDatum;
 use r\Exceptions\RqlDriverError;
-use r\Options\BinaryFormat;
 use r\Options\CircleOptions;
 use r\Options\DistanceOptions;
-use r\Options\GrantOptions;
 use r\Options\HttpOptions;
 use r\Options\Iso8601Options;
 use r\Options\RandomOptions;
@@ -111,18 +109,16 @@ use r\ValuedQuery\RObject;
  * Connect to a database.
  *
  * @see https://rethinkdb.com/api/javascript/connect/
- * @param ConnectionOptions $connectionOptions
- * @return Connection
  */
 function connect(
-	ConnectionOptions $connectionOptions
+    ConnectionOptions $connectionOptions
 ): Connection {
-	return new Connection($connectionOptions);
+    return new Connection($connectionOptions);
 }
 
 function connectAsync(ConnectionOptions $connectionOptions): AmpConnection
 {
-	return new AmpConnection($connectionOptions);
+    return new AmpConnection($connectionOptions);
 }
 
 /**
@@ -130,13 +126,14 @@ function connectAsync(ConnectionOptions $connectionOptions): AmpConnection
  *
  * The db command is optional. If it is not present in a query, the query will run against the default database for the
  * connection, specified in the db argument to connect.
+ *
  * @see https://rethinkdb.com/api/javascript/db/
- * @param string $dbName The name of the database to use.
- * @return Db
+ *
+ * @param string $dbName the name of the database to use
  */
 function db(string $dbName): Db
 {
-	return new Db($dbName);
+    return new Db($dbName);
 }
 
 /**
@@ -151,18 +148,19 @@ function db(string $dbName): Db
  * If a database with the same name already exists, the command throws ReqlRuntimeError.
  *
  * Note: Only alphanumeric characters, hyphens and underscores are valid for the database name.
+ *
  * @see https://rethinkdb.com/api/javascript/db_create
- * @param string $dbName The name of the database to create.
- * @return DbCreate
+ *
+ * @param string $dbName the name of the database to create
  */
 function dbCreate(string $dbName): DbCreate
 {
-	return new DbCreate($dbName);
+    return new DbCreate($dbName);
 }
 
 function grant(string $user, ...$permissions): Grant
 {
-	return new Grant(null, $user, ...$permissions);
+    return new Grant(null, $user, ...$permissions);
 }
 
 /**
@@ -176,37 +174,39 @@ function grant(string $user, ...$permissions): Grant
  *  - old_val: the database’s original config value.
  *  - new_val: always null.
  * If the given database does not exist, the command throws ReqlRuntimeError.
+ *
  * @see https://rethinkdb.com/api/javascript/db_drop
+ *
  * @param string $dbName The database to drop
- * @return DbDrop
  */
 function dbDrop(string $dbName): DbDrop
 {
-	return new DbDrop($dbName);
+    return new DbDrop($dbName);
 }
 
 /**
  * List all database names in the system. The result is a list of strings.
+ *
  * @see https://rethinkdb.com/api/javascript/db_list
- * @return DbList
  */
 function dbList(): DbList
 {
-	return new DbList();
+    return new DbList();
 }
 
 /**
  * Return all documents in a table. Other commands may be chained after table to return a subset of documents (such as
  * get and filter) or perform further processing.
+ *
  * @see https://rethinkdb.com/api/javascript/table/
- * @param string $tableName The name of the table to read from.
- * @param TableOptions $options
- * @return Table
+ *
+ * @param string $tableName the name of the table to read from
+ *
  * @throws RqlDriverError
  */
 function table(string $tableName, TableOptions $options = new TableOptions()): Table
 {
-	return new Table(null, $tableName, $options);
+    return new Table(null, $tableName, $options);
 }
 
 /**
@@ -219,14 +219,14 @@ function table(string $tableName, TableOptions $options = new TableOptions()): T
  *   - old_val: always null.
  *   - new_val: the table’s new config value.
  * If a table with the same name already exists, the command throws ReqlOpFailedError.
+ *
  * @see https://rethinkdb.com/api/javascript/table_create/
+ *
  * @param string $tableName The table name to create
- * @param TableCreateOptions $options
- * @return TableCreate
  */
 function tableCreate(string $tableName, TableCreateOptions $options = new TableCreateOptions()): TableCreate
 {
-	return new TableCreate(null, $tableName, $options);
+    return new TableCreate(null, $tableName, $options);
 }
 
 /**
@@ -239,23 +239,24 @@ function tableCreate(string $tableName, TableCreateOptions $options = new TableC
  *   - old_val: the dropped table’s config value.
  *   - new_val: always null.
  * If the given table does not exist in the database, the command throws ReqlRuntimeError.
+ *
  * @see https://rethinkdb.com/api/javascript/table_drop
+ *
  * @param string $tableName The table to drop
- * @return TableDrop
  */
 function tableDrop(string $tableName): TableDrop
 {
-	return new TableDrop(null, $tableName);
+    return new TableDrop(null, $tableName);
 }
 
 /**
  * List all table names in a database. The result is a list of strings.
+ *
  * @see https://rethinkdb.com/api/javascript/table_list
- * @return TableList
  */
 function tableList(): TableList
 {
-	return new TableList(null);
+    return new TableList(null);
 }
 
 /**
@@ -271,14 +272,12 @@ function tableList(): TableList
  * data types.) While the arguments will all be evaluated before the function is executed, they may be evaluated in any
  * order, so their values should not be dependent on one another. The type of do’s result is the type of the value
  * returned from the function or last expression.
+ *
  * @see https://rethinkdb.com/api/javascript/do/
- * @param array $args
- * @param Query|callable $inExpr
- * @return RDo
  */
 function rDo(array $args, Query|callable $inExpr): RDo
 {
-	return new RDo($args, $inExpr);
+    return new RDo($args, $inExpr);
 }
 
 /**
@@ -287,13 +286,12 @@ function rDo(array $args, Query|callable $inExpr): RDo
  *
  * This is analogous to using apply in JavaScript. (However, note that args evaluates all its arguments before passing
  * them into the parent term, even if the parent term otherwise allows lazy evaluation.)
+ *
  * @see https://rethinkdb.com/api/javascript/args
- * @param array $args
- * @return Args
  */
 function args(array $args): Args
 {
-	return new Args($args);
+    return new Args($args);
 }
 
 /**
@@ -302,30 +300,29 @@ function args(array $args): Args
  * The branch command takes 2n+1 arguments: pairs of conditional expressions and commands to be executed if the
  * conditionals return any value but false or null (i.e., “truthy” values), with a final “else” command to be evaluated
  * if all of the conditionals are false or null.
+ *
  * @see https://rethinkdb.com/api/javascript/branch
- * @param Query $test
- * @param ...$branches
- * @return Branch
  */
 function branch(Query $test, ...$branches): Branch
 {
-	return new Branch($test, ...$branches);
+    return new Branch($test, ...$branches);
 }
 
 /**
  * Returns the currently visited document.
+ *
  * @see https://rethinkdb.com/api/javascript/row/
+ *
  * @param string|Query|null $attribute Shortcut for row()(attribute)
- * @return GetField|ImplicitVar
  */
 function row(string|Query|null $attribute = null): GetField|ImplicitVar
 {
-	if (null !== $attribute) {
-		// A shortcut to do row()($attribute)
-		return new GetField(new ImplicitVar(), $attribute);
-	} else {
-		return new ImplicitVar();
-	}
+    if (null !== $attribute) {
+        // A shortcut to do row()($attribute)
+        return new GetField(new ImplicitVar(), $attribute);
+    } else {
+        return new ImplicitVar();
+    }
 }
 
 /**
@@ -334,135 +331,125 @@ function row(string|Query|null $attribute = null): GetField|ImplicitVar
  * timeout is the number of seconds before r.js times out. The default value is 5 seconds.
  *
  * Whenever possible, you should use native ReQL commands rather than r.js for better performance.
+ *
  * @see https://rethinkdb.com/api/javascript/js/
- * @param string $code The js code to execute
+ *
+ * @param string         $code    The js code to execute
  * @param int|float|null $timeout The timeout in seconds
- * @return Js
  */
-function js(string $code, int|null|float $timeout = null): Js
+function js(string $code, int|float|null $timeout = null): Js
 {
-	return new Js($code, $timeout);
+    return new Js($code, $timeout);
 }
 
 /**
  * Throw a runtime error. If called with no arguments inside the second argument to default, re-throw the current error.
+ *
  * @see https://rethinkdb.com/api/javascript/error/
- * @param string|null $message
- * @return Error
  */
-function error(string|null $message = null): Error
+function error(?string $message = null): Error
 {
-	return new Error($message);
+    return new Error($message);
 }
 
 /**
  * Construct a ReQL JSON object from a native object.
  *
- * @param mixed $obj
- * @return MakeObject|ObjectDatum|Iso8601|MakeArray|StringDatum|BoolDatum|NumberDatum|Query|NullDatum|ArrayDatum
  * @throws RqlDriverError
  */
 function expr(
-	mixed $obj
+    mixed $obj
 ): MakeObject|ObjectDatum|Iso8601|MakeArray|StringDatum|BoolDatum|NumberDatum|Query|NullDatum|ArrayDatum {
-	if ($obj instanceof Query) {
-		return $obj;
-	}
+    if ($obj instanceof Query) {
+        return $obj;
+    }
 
-	$dc = new DatumConverter;
-	return $dc->nativeToDatum($obj);
+    $dc = new DatumConverter();
+
+    return $dc->nativeToDatum($obj);
 }
 
 /**
  * Encapsulate binary data within a query.
+ *
  * @see https://rethinkdb.com/api/javascript/binary/
- * @param string $str
- * @return Datum
+ *
  * @throws RqlDriverError
  */
 function binary(string $str): Datum
 {
-	$encodedStr = base64_encode($str);
-	if ($encodedStr === false) {
-		throw new RqlDriverError("Failed to Base64 encode '" . $str . "'");
-	}
-	$pseudo = array('$reql_type$' => 'BINARY', 'data' => $encodedStr);
+    $encodedStr = base64_encode($str);
+    if ($encodedStr === false) {
+        throw new RqlDriverError("Failed to Base64 encode '".$str."'");
+    }
+    $pseudo = ['$reql_type$' => 'BINARY', 'data' => $encodedStr];
 
-	$dc = new DatumConverter;
-	return $dc->nativeToDatum($pseudo);
+    $dc = new DatumConverter();
+
+    return $dc->nativeToDatum($pseudo);
 }
 
 /**
  * @see https://rethinkdb.com/api/javascript/order_by/
- *
- * @param callable|string $attribute
- * @return Desc
  */
 function desc(callable|string $attribute): Desc
 {
-	return new Desc($attribute);
+    return new Desc($attribute);
 }
 
 /**
  * @see https://rethinkdb.com/api/javascript/order_by/
- * @param callable|string $attribute
- * @return Asc
  */
 function asc(callable|string $attribute): Asc
 {
-	return new Asc($attribute);
+    return new Asc($attribute);
 }
 
 /**
  * Parse a JSON string on the server.
+ *
  * @see https://rethinkdb.com/api/javascript/json/
- * @param string|Query $json
- * @return Json
  */
 function json(string|Query $json): Json
 {
-	return new Json($json);
+    return new Json($json);
 }
 
 /**
  * Retrieve data from the specified URL over HTTP. The return type depends on the resultFormat option, which checks the
  * Content-Type of the response by default. Make sure that you never use this command for user provided URLs.
+ *
  * @see https://rethinkdb.com/api/javascript/http/
- * @param string $url
- * @param HttpOptions $opts
- * @return Http
  */
 function http(string $url, HttpOptions $opts = new HttpOptions()): Http
 {
-	return new Http($url, $opts);
+    return new Http($url, $opts);
 }
 
 /**
  * Creates an object from a list of key-value pairs, where the keys must be strings. r.object(A, B, C, D) is equivalent
  * to r.expr([[A, B], [C, D]]).coerceTo('OBJECT').
+ *
  * @see https://rethinkdb.com/api/javascript/object/
- * @param mixed ...$object
- * @return RObject
  */
 function rObject(mixed ...$object): RObject
 {
-	return new RObject(...$object);
+    return new RObject(...$object);
 }
 
 /**
  * Replace an object in a field instead of merging it with an existing object in a merge or update operation. Using
  * literal with no arguments in a merge or update operation will remove the corresponding field.
+ *
  * @see https://rethinkdb.com/api/javascript/literal/
- * @param ...$args
- * @return Literal
  */
 function literal(...$args): Literal
 {
-	if (count($args) == 0) {
-		return new Literal();
-	} else {
-		return new Literal($args[0]);
-	}
+    if (count($args) == 0) {
+        return new Literal();
+    } else {
+        return new Literal($args[0]);
+    }
 }
 
 /**
@@ -470,62 +457,52 @@ function literal(...$args): Literal
  *
  * The add command can be called in either prefix or infix form; both forms are equivalent. Note that ReQL will not
  * perform type coercion. You cannot, for example, add a string and a number together.
+ *
  * @see https://rethinkdb.com/api/javascript/add/
- * @param string|int|float|array|Query $expr1
- * @param string|int|float|array|Query $expr2
- * @return Add
  */
 function add(string|int|float|array|Query $expr1, string|int|float|array|Query $expr2): Add
 {
-	return new Add($expr1, $expr2);
+    return new Add($expr1, $expr2);
 }
 
 /**
  * Subtract two numbers.
+ *
  * @see https://rethinkdb.com/api/javascript/sub/
- * @param int|float|Query $expr1
- * @param int|float|Query $expr2
- * @return Sub
  */
 function sub(int|float|Query $expr1, int|float|Query $expr2): Sub
 {
-	return new Sub($expr1, $expr2);
+    return new Sub($expr1, $expr2);
 }
 
 /**
  * Multiply two numbers, or make a periodic array.
+ *
  * @see https://rethinkdb.com/api/javascript/mul/
- * @param int|float|Query $expr1
- * @param int|float|Query $expr2
- * @return Mul
  */
 function mul(int|float|Query $expr1, int|float|Query $expr2): Mul
 {
-	return new Mul($expr1, $expr2);
+    return new Mul($expr1, $expr2);
 }
 
 /**
  * Divide two numbers.
+ *
  * @see https://rethinkdb.com/api/javascript/div/
- * @param int|float|Query $expr1
- * @param int|float|Query $expr2
- * @return Div
  */
 function div(int|float|Query $expr1, int|float|Query $expr2): Div
 {
-	return new Div($expr1, $expr2);
+    return new Div($expr1, $expr2);
 }
 
 /**
  * Find the remainder when dividing two numbers.
+ *
  * @see https://rethinkdb.com/api/javascript/mod/
- * @param int|float|Query $expr1
- * @param int|float|Query $expr2
- * @return Mod
  */
 function mod(int|float|Query $expr1, int|float|Query $expr2): Mod
 {
-	return new Mod($expr1, $expr2);
+    return new Mod($expr1, $expr2);
 }
 
 /**
@@ -533,14 +510,12 @@ function mod(int|float|Query $expr1, int|float|Query $expr2): Mod
  *
  * The and command can be used as an infix operator after its first argument (r.expr(true).and(false)) or given all of
  * its arguments as parameters (r.and(true,false)).
+ *
  * @see https://rethinkdb.com/api/javascript/and/
- * @param bool|Query $expr1
- * @param bool|Query $expr2
- * @return RAnd
  */
 function rAnd(bool|Query $expr1, bool|Query $expr2): RAnd
 {
-	return new RAnd($expr1, $expr2);
+    return new RAnd($expr1, $expr2);
 }
 
 /**
@@ -548,86 +523,72 @@ function rAnd(bool|Query $expr1, bool|Query $expr2): RAnd
  *
  * The or command can be used as an infix operator after its first argument (r.expr(true).or(false)) or given all of
  * its arguments as parameters (r.or(true,false)).
+ *
  * @see https://rethinkdb.com/api/javascript/or/
- * @param bool|Query $expr1
- * @param bool|Query $expr2
- * @return ROr
  */
 function rOr(bool|Query $expr1, bool|Query $expr2): ROr
 {
-	return new ROr($expr1, $expr2);
+    return new ROr($expr1, $expr2);
 }
 
 /**
  * Test if two or more values are equal.
+ *
  * @see https://rethinkdb.com/api/javascript/eq/
- * @param mixed $expr1
- * @param mixed $expr2
- * @return Eq
  */
 function eq(mixed $expr1, mixed $expr2): Eq
 {
-	return new Eq($expr1, $expr2);
+    return new Eq($expr1, $expr2);
 }
 
 /**
  * Test if two or more values are not equal.
+ *
  * @see https://rethinkdb.com/api/javascript/ne/
- * @param mixed $expr1
- * @param mixed $expr2
- * @return Ne
  */
 function ne(mixed $expr1, mixed $expr2): Ne
 {
-	return new Ne($expr1, $expr2);
+    return new Ne($expr1, $expr2);
 }
 
 /**
  * Compare values, testing if the left-hand value is greater than the right-hand.
+ *
  * @see https://rethinkdb.com/api/javascript/gt/
- * @param mixed $expr1
- * @param mixed $expr2
- * @return Gt
  */
 function gt(mixed $expr1, mixed $expr2): Gt
 {
-	return new Gt($expr1, $expr2);
+    return new Gt($expr1, $expr2);
 }
 
 /**
  * Compare values, testing if the left-hand value is greater than or equal to the right-hand.
+ *
  * @see https://rethinkdb.com/api/javascript/ge/
- * @param mixed $expr1
- * @param mixed $expr2
- * @return Ge
  */
 function ge(mixed $expr1, mixed $expr2): Ge
 {
-	return new Ge($expr1, $expr2);
+    return new Ge($expr1, $expr2);
 }
 
 /**
  * Compare values, testing if the left-hand value is less than the right-hand.
+ *
  * @see https://rethinkdb.com/api/javascript/lt/
- * @param mixed $expr1
- * @param mixed $expr2
- * @return Lt
  */
 function lt(mixed $expr1, mixed $expr2): Lt
 {
-	return new Lt($expr1, $expr2);
+    return new Lt($expr1, $expr2);
 }
 
 /**
  * Compare values, testing if the left-hand value is less than or equal to the right-hand.
+ *
  * @see https://rethinkdb.com/api/javascript/le/
- * @param mixed $expr1
- * @param mixed $expr2
- * @return Le
  */
 function le(mixed $expr1, mixed $expr2): Le
 {
-	return new Le($expr1, $expr2);
+    return new Le($expr1, $expr2);
 }
 
 /**
@@ -635,13 +596,10 @@ function le(mixed $expr1, mixed $expr2): Le
  *
  * not can be called either via method chaining, immediately after an expression that evaluates as a boolean value, or
  * by passing the expression as a parameter to not. All values that are not false or null will be converted to true.
- *
- * @param bool|Query $expr
- * @return Not
  */
 function not(bool|Query $expr): Not
 {
-	return new Not($expr);
+    return new Not($expr);
 }
 
 /**
@@ -649,28 +607,20 @@ function not(bool|Query $expr): Not
  * AND operation on each pair of the corresponding bits, which is equivalent to multiplying them. Thus, if both bits
  * in the compared position are 1, the bit in the resulting binary representation is 1 (1 × 1 = 1); otherwise, the
  * result is 0 (1 × 0 = 0 and 0 × 0 = 0).
- *
- * @param int|float|Query $left
- * @param int|float|Query ...$other
- * @return BitAnd
  */
 function bitAnd(int|float|Query $left, int|float|Query ...$other): BitAnd
 {
-	return new BitAnd($left, $other);
+    return new BitAnd($left, $other);
 }
 
 /**
  * A bitwise OR is a binary operation that takes two bit patterns of equal length and performs the logical inclusive
  * OR operation on each pair of corresponding bits. The result in each position is 0 if both bits are 0, while
  * otherwise the result is 1.
- *
- * @param int|float|Query $left
- * @param int|float|Query ...$other
- * @return BitOr
  */
 function bitOr(int|float|Query $left, int|float|Query ...$other): BitOr
 {
-	return new BitOr($left, $other);
+    return new BitOr($left, $other);
 }
 
 /**
@@ -678,26 +628,19 @@ function bitOr(int|float|Query $left, int|float|Query ...$other): BitOr
  * exclusive OR operation on each pair of corresponding bits. The result in each position is 1 if only the first bit
  * is 1 or only the second bit is 1, but will be 0 if both are 0 or both are 1. In this we perform the comparison of
  * two bits, being 1 if the two bits are different, and 0 if they are the same.
- *
- * @param int|float|Query $left
- * @param int|float|Query ...$other
- * @return BitXor
  */
 function bitXor(int|float|Query $left, int|float|Query ...$other): BitXor
 {
-	return new BitXor($left, $other);
+    return new BitXor($left, $other);
 }
 
 /**
  * A bitwise NOT, or complement, is a unary operation that performs logical negation on each bit, forming the ones’
  * complement of the given binary value. Bits that are 0 become 1, and those that are 1 become 0.
- *
- * @param int|float|Query $value
- * @return BitNot
  */
 function bitNot(int|float|Query $value): BitNot
 {
-	return new BitNot($value);
+    return new BitNot($value);
 }
 
 /**
@@ -708,14 +651,10 @@ function bitNot(int|float|Query $value): BitNot
  *
  * Note: SHL and SAL are the same, and differentiation only happens because SAR and SHR (right shifting) has
  * differences in their implementation.
- *
- * @param int|float|Query $left
- * @param int|float|Query ...$other
- * @return BitSal
  */
 function bitSal(int|float|Query $left, int|float|Query ...$other): BitSal
 {
-	return new BitSal($left, $other);
+    return new BitSal($left, $other);
 }
 
 /**
@@ -723,14 +662,10 @@ function bitSal(int|float|Query $left, int|float|Query ...$other): BitSal
  * disappear (except for the last, which goes into the carry flag). But in an arithmetic shift, the spaces are
  * filled in such a way to preserve the sign of the number being slid. For this reason, arithmetic shifts are better
  * suited for signed numbers in two’s complement format.
- *
- * @param int|float|Query $left
- * @param int|float|Query ...$other
- * @return BitSar
  */
 function bitSar(int|float|Query $left, int|float|Query ...$other): BitSar
 {
-	return new BitSar($left, $other);
+    return new BitSar($left, $other);
 }
 
 /**
@@ -745,28 +680,24 @@ function bitSar(int|float|Query $left, int|float|Query ...$other): BitSar
  *   in which case x will be returned. Specifying a floating point number without the float option will raise an error.
  * Note: The last argument given will always be the ‘open’ side of the range, but when generating a floating-point
  * number, the ‘open’ side may be less than the ‘closed’ side.
+ *
  * @see https://rethinkdb.com/api/javascript/random/
- * @param int|float|Query|null $left
- * @param int|float|Query|RandomOptions|null $right
- * @param RandomOptions|null $opts
- * @return Random
  */
 function random(
-	int|float|Query|null $left = null,
-	int|float|Query|RandomOptions|null $right = null,
-	RandomOptions|null $opts = null
+    int|float|Query|null $left = null,
+    int|float|Query|RandomOptions|null $right = null,
+    ?RandomOptions $opts = null
 ): Random {
-	return new Random($left, $right, $opts);
+    return new Random($left, $right, $opts);
 }
 
 /**
  * Return a time object representing the current time in UTC. The command now() is computed once when the server
  * receives the query, so multiple instances of r.now() will always return the same time inside a query.
- * @return Now
  */
 function now(): Now
 {
-	return new Now();
+    return new Now();
 }
 
 /**
@@ -781,37 +712,26 @@ function now(): Now
  * - minutes is an integer.
  * - seconds is a double. Its value will be rounded to three decimal places (millisecond-precision).
  * - timezone can be 'Z' (for UTC) or a string with the format ±[hh]:[mm].
- *
- * @param int|Query $year
- * @param int|Query $month
- * @param int|Query $day
- * @param string|int|Query|null $hourOrTimezone
- * @param string|int|Query|null $minute
- * @param string|int|Query|null $second
- * @param string|int|Query|null $timezone
- * @return Time
  */
 function time(
-	int|Query $year,
-	int|Query $month,
-	int|Query $day,
-	string|int|null|Query $hourOrTimezone = null,
-	string|int|null|Query $minute = null,
-	string|int|null|Query $second = null,
-	string|int|null|Query $timezone = null
+    int|Query $year,
+    int|Query $month,
+    int|Query $day,
+    string|int|Query|null $hourOrTimezone = null,
+    string|int|Query|null $minute = null,
+    string|int|Query|null $second = null,
+    string|int|Query|null $timezone = null
 ): Time {
-	return new Time($year, $month, $day, $hourOrTimezone, $minute, $second, $timezone);
+    return new Time($year, $month, $day, $hourOrTimezone, $minute, $second, $timezone);
 }
 
 /**
  * Create a time object based on seconds since epoch. The first argument is a double and will be rounded to three
  * decimal places (millisecond-precision).
- * @param int|float|Query $epochTime
- * @return EpochTime
  */
 function epochTime(int|float|Query $epochTime): EpochTime
 {
-	return new EpochTime($epochTime);
+    return new EpochTime($epochTime);
 }
 
 /**
@@ -819,185 +739,162 @@ function epochTime(int|float|Query $epochTime): EpochTime
  * all valid ISO 8601 formats except for week dates. Read more about the ISO 8601 format at Wikipedia.
  *
  * If you pass an ISO 8601 string without a time zone, you must specify the time zone with the defaultTimezone argument.
- *
- * @param string|Query $iso8601Date
- * @param Iso8601Options $opts
- * @return Iso8601
  */
 function iso8601(string|Query $iso8601Date, Iso8601Options $opts = new Iso8601Options()): Iso8601
 {
-	return new Iso8601($iso8601Date, $opts);
+    return new Iso8601($iso8601Date, $opts);
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return Monday
  */
 function monday(): Monday
 {
-	return new Monday();
+    return new Monday();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return Tuesday
  */
 function tuesday(): Tuesday
 {
-	return new Tuesday();
+    return new Tuesday();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return Wednesday
  */
 function wednesday(): Wednesday
 {
-	return new Wednesday();
+    return new Wednesday();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return Thursday
  */
 function thursday(): Thursday
 {
-	return new Thursday();
+    return new Thursday();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return Friday
  */
 function friday(): Friday
 {
-	return new Friday();
+    return new Friday();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return Saturday
  */
 function saturday(): Saturday
 {
-	return new Saturday();
+    return new Saturday();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return Sunday
  */
 function sunday(): Sunday
 {
-	return new Sunday();
+    return new Sunday();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return January
  */
 function january(): January
 {
-	return new January();
+    return new January();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return February
  */
 function february(): February
 {
-	return new February();
+    return new February();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return March
  */
 function march(): March
 {
-	return new March();
+    return new March();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return April
  */
 function april(): April
 {
-	return new April();
+    return new April();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return May
  */
 function may(): May
 {
-	return new May();
+    return new May();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return June
  */
 function june(): June
 {
-	return new June();
+    return new June();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return July
  */
 function july(): July
 {
-	return new July();
+    return new July();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return August
  */
 function august(): August
 {
-	return new August();
+    return new August();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return September
  */
 function september(): September
 {
-	return new September();
+    return new September();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return October
  */
 function october(): October
 {
-	return new October();
+    return new October();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return November
  */
 function november(): November
 {
-	return new November();
+    return new November();
 }
 
 /**
  * @see https://rethinkdb.com/docs/dates-and-times/java/#retrieving-portions-of-times
- * @return December
  */
 function december(): December
 {
-	return new December();
+    return new December();
 }
 
 /**
@@ -1009,27 +906,24 @@ function december(): December
  *
  * Only longitude/latitude coordinates are supported. GeoJSON objects that use Cartesian coordinates, specify an
  * altitude, or specify their own coordinate reference system will be rejected.
+ *
  * @see https://rethinkdb.com/api/javascript/geoJSON
- * @param array|object $geojson
- * @return GeoJSON
  */
 function geoJSON(array|object $geojson): GeoJSON
 {
-	return new GeoJSON($geojson);
+    return new GeoJSON($geojson);
 }
 
 /**
  * Construct a geometry object of type Point. The point is specified by two floating point numbers, the
  * longitude (−180 to 180) and latitude (−90 to 90) of the point on a perfect sphere. See Geospatial support for more
  * information on ReQL’s coordinate system.
+ *
  * @see https://rethinkdb.com/api/javascript/point
- * @param int|float|Query $lat
- * @param int|float|Query $lon
- * @return Point
  */
 function point(int|float|Query $lat, int|float|Query $lon): Point
 {
-	return new Point($lat, $lon);
+    return new Point($lat, $lon);
 }
 
 /**
@@ -1039,13 +933,12 @@ function point(int|float|Query $lat, int|float|Query $lon): Point
  * - Two or more Point objects specifying the line’s vertices.
  * Longitude (−180 to 180) and latitude (−90 to 90) of vertices are plotted on a perfect sphere. See Geospatial support
  * for more information on ReQL’s coordinate system.
+ *
  * @see https://rethinkdb.com/api/javascript/line
- * @param array|Query ...$points
- * @return Line
  */
 function line(array|Query ...$points): Line
 {
-	return new Line(...$points);
+    return new Line(...$points);
 }
 
 /**
@@ -1059,13 +952,12 @@ function line(array|Query ...$points): Line
  * If the last point does not specify the same coordinates as the first point, polygon will close the polygon by
  * connecting them. You cannot directly construct a polygon with holes in it using polygon, but you can use polygonSub
  * to use a second polygon within the interior of the first to define a hole.
+ *
  * @see https://rethinkdb.com/api/javascript/polygon
- * @param array|Query ...$points
- * @return Polygon
  */
 function polygon(array|Query ...$points): Polygon
 {
-	return new Polygon(...$points);
+    return new Polygon(...$points);
 }
 
 /**
@@ -1076,26 +968,19 @@ function polygon(array|Query ...$points): Polygon
  * longitude (−180 to 180) of the point on a perfect sphere (see Geospatial support for more information on ReQL’s
  * coordinate system), or by a point object. The radius is a floating point number whose units are meters by default,
  * although that may be changed with the unit argument.
- * @param array|Query $center
- * @param int|float|Query $radius
- * @param CircleOptions $opts
- * @return Circle
  */
 function circle(array|Query $center, int|float|Query $radius, CircleOptions $opts = new CircleOptions()): Circle
 {
-	return new Circle($center, $radius, $opts);
+    return new Circle($center, $radius, $opts);
 }
 
 /**
  * Tests whether two geometry objects intersect with one another. When applied to a sequence of geometry objects,
  * intersects acts as a filter, returning a sequence of objects from the sequence that intersect with the argument.
- * @param Query $g1
- * @param Query $g2
- * @return Intersects
  */
 function intersects(Query $g1, Query $g2): Intersects
 {
-	return new Intersects($g1, $g2);
+    return new Intersects($g1, $g2);
 }
 
 /**
@@ -1107,14 +992,10 @@ function intersects(Query $g1, Query $g2): Intersects
  * if the polygon or line is extremely large compared to Earth’s radius and the distance is being computed with the
  * default WGS84 model, the results of distance should be considered approximate due to the deviation between the
  * ellipsoid and spherical models.
- * @param Query $g1
- * @param Query $g2
- * @param DistanceOptions $opts
- * @return Distance
  */
 function distance(Query $g1, Query $g2, DistanceOptions $opts = new DistanceOptions()): Distance
 {
-	return new Distance($g1, $g2, $opts);
+    return new Distance($g1, $g2, $opts);
 }
 
 /**
@@ -1127,31 +1008,26 @@ function distance(Query $g1, Query $g2, DistanceOptions $opts = new DistanceOpti
  *
  * Please take into consideration when you generating version 5 UUIDs can’t be considered guaranteed unique if they’re
  * computing based on user data because they use SHA-1 algorithm.
- *
- * @param $str
- * @return Uuid
  */
-function uuid(string|Query $str = null): Uuid
+function uuid(string|Query|null $str = null): Uuid
 {
-	return new Uuid($str);
+    return new Uuid($str);
 }
 
 /**
  * @see https://rethinkdb.com/api/javascript/between/
- * @return Minval
  */
 function minval(): Minval
 {
-	return new Minval();
+    return new Minval();
 }
 
 /**
  * @see https://rethinkdb.com/api/javascript/between/
- * @return Maxval
  */
 function maxval(): Maxval
 {
-	return new Maxval();
+    return new Maxval();
 }
 
 /**
@@ -1168,14 +1044,10 @@ function maxval(): Maxval
  *
  * Any specified arguments must be integers, or a ReqlRuntimeError will be thrown. If the start value is equal or to
  * higher than the end value, no error will be thrown but a zero-element stream will be returned.
- *
- * @param int|Query|null $startOrEndValue
- * @param int|Query|null $endValue
- * @return Range
  */
-function range(int|Query $startOrEndValue = null, int|Query $endValue = null): Range
+function range(int|Query|null $startOrEndValue = null, int|Query|null $endValue = null): Range
 {
-	return new Range($startOrEndValue, $endValue);
+    return new Range($startOrEndValue, $endValue);
 }
 
 /**
@@ -1184,61 +1056,49 @@ function range(int|Query $startOrEndValue = null, int|Query $endValue = null): R
  *
  * Note that map can only be applied to sequences, not single values. If you wish to apply a function to a single
  * value/selection (including an array), use the do command.
- *
- * @param array|Query $sequences
- * @param callable|Query|array ...$mappingFunction
- * @return MapMultiple
  */
 function mapMultiple(array|Query $sequences, callable|Query|array ...$mappingFunction): MapMultiple
 {
-	return new MapMultiple($sequences, ...$mappingFunction);
+    return new MapMultiple($sequences, ...$mappingFunction);
 }
 
 /**
  * Merge two or more sequences.
+ *
  * @see https://rethinkdb.com/api/javascript/union
- * @param array|Query $sequence
- * @param array|Query|UnionOptions ...$otherSequences
- * @return Union
  */
 function union(array|Query $sequence, array|Query|UnionOptions ...$otherSequences): Union
 {
-	return new Union($sequence, ...$otherSequences);
+    return new Union($sequence, ...$otherSequences);
 }
 
 /**
  * Rounds the given value up, returning the smallest integer value greater than or equal to the given value (the
  * value’s ceiling).
- * @param float|int|Query $value
- * @return Ceil
  */
 function ceil(float|int|Query $value): Ceil
 {
-	return new Ceil($value);
+    return new Ceil($value);
 }
 
 /**
  * Rounds the given value down, returning the largest integer value less than or equal to the given value (the value’s
  * floor).
- * @param float|int|Query $value
- * @return Floor
  */
 function floor(float|int|Query $value): Floor
 {
-	return new Floor($value);
+    return new Floor($value);
 }
 
 /**
  * Rounds the given value to the nearest whole integer.
- * @param float|int|Query $value
- * @return Round
  */
 function round(float|int|Query $value): Round
 {
-	return new Round($value);
+    return new Round($value);
 }
 
 function systemInfo(): string
 {
-	return "PHP-RQL Version: " . PHP_RQL_VERSION . "\n";
+    return 'PHP-RQL Version: '.PHP_RQL_VERSION."\n";
 }

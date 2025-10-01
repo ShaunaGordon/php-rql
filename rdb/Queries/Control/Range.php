@@ -2,13 +2,13 @@
 
 namespace r\Queries\Control;
 
+use r\ProtocolBuffer\TermTermType;
 use r\Query;
 use r\ValuedQuery\ValuedQuery;
-use r\ProtocolBuffer\TermTermType;
 
 class Range extends ValuedQuery
 {
-    public function __construct(int|Query $startOrEndValue = null, int|Query $endValue = null)
+    public function __construct(int|Query|null $startOrEndValue = null, int|Query|null $endValue = null)
     {
         if (isset($startOrEndValue)) {
             $this->setPositionalArg(0, $this->nativeToDatum($startOrEndValue));
