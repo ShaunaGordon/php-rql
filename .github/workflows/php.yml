@@ -45,3 +45,6 @@ jobs:
 
     - name: Run test suite
       run: composer test
+      env:
+        RDB_HOST: localhost
+        RDB_PORT: 28015
