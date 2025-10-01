@@ -8,3 +8,4 @@ _steps/
 rethinkdb_data/
 wercker
 
+*.cache
