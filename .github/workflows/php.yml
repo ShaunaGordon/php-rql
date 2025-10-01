@@ -2,9 +2,9 @@ name: Unit Tests
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
   merge_group:
 
 permissions:
@@ -13,10 +13,10 @@ permissions:
 jobs:
   build:
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     services:
       rethinkdb:
-        image: rethinkdb:2.4.2
+        image: rethinkdb:latest
         ports:
           - 28015:28015
           - 29015:29015
@@ -26,16 +26,14 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.2'
-      env:
-        runner: self-hosted
+        php-version: '8.4'
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
     - name: Cache Composer packages
       id: composer-cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: vendor
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
